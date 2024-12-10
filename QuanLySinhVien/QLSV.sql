@@ -12,10 +12,10 @@ CREATE TABLE monhoc (
 -- Nhập dữ liệu bảng môn học
 INSERT INTO monhoc
 VALUES ('M01', 'Toan', 3),
-	   ('M02', 'Ly', 2),
-       ('M03', 'Hoa', 2),
-       ('M04', 'Anh', 2),
-       ('M05', 'Van', 3);
+	('M02', 'Ly', 2),
+	('M03', 'Hoa', 2),
+	('M04', 'Anh', 2),
+	('M05', 'Van', 3);
 -- Xem bảng môn học
 SELECT * FROM monhoc;
 
@@ -29,8 +29,8 @@ CREATE TABLE lop (
 -- Nhập dữ liệu bảng lớp
 INSERT INTO lop
 VALUES ('L01', 'Computer Science', '2023'),
-	   ('L02', 'Infomation Technology', '2023'),
-       ('L03', 'Logictics', '2023');
+	('L02', 'Infomation Technology', '2023'),
+	('L03', 'Logictics', '2023');
 -- Xem bảng lớp
 SELECT * FROM lop;
 
@@ -44,64 +44,64 @@ CREATE TABLE sinhvien (
 -- Nhập dữ liệu bảng sinh viên
 INSERT INTO sinhvien
 VALUES ('S01', 'Nguyen Van A', 'Ben Tre', 'L01'),
-	   ('S02', 'Dang Thu Ha', 'Dong Thap', 'L02'),
-	   ('S03', 'Tran Duc Dat', 'Long An', 'L03'),
-	   ('S04', 'Nguyen Thi B', 'TP. Ho Chi Minh', 'L01'),
-	   ('S05', 'Huynh Van Thien', 'Cao Lanh', 'L02'),
-	   ('S06', 'Chau Bao Duy', 'Tien Giang', 'L03'),
-	   ('S07', 'Nguyen Van F', 'Campodia', 'L01'),
-	   ('S08', 'Tran Chau C', 'China', 'L02'),
-	   ('S09', 'Tran Minh Hieu', 'Hoc Mon', 'L03'),
-	   ('S10', 'Sa Tang', 'Hoa Qua Son', 'L01'),
-	   ('S11', 'Huynh Thien An', 'Ben Tre', 'L02'),
-	   ('S12', 'Huynh Van Phang', 'Ha Noi', 'L03'),
-	   ('S13', 'Chau Bao Toan', 'Thai Binh', 'L01'),
-	   ('S14', 'Sieu San Yan', 'Thai Nguyen', 'L02'),
-	   ('S15', 'Pham Van Bo', 'Trung Nguyen', 'L03'),
-	   ('S16', 'Chau Bao Binh', 'Ca Mau', 'L01'),
-	   ('S17', 'Pham Van Bo', 'Kien Giang', 'L02'),
-	   ('S18', 'Doan Hoai An', 'Ben Tre', 'L03'),
-	   ('S19', 'Trinh Tran Phuong Tuan', 'Ben Tre', 'L01'),
-	   ('S20', 'Le Tuan Khang', 'Rach Gia', 'L02');
+	('S02', 'Dang Thu Ha', 'Dong Thap', 'L02'),
+	('S03', 'Tran Duc Dat', 'Long An', 'L03'),
+	('S04', 'Nguyen Thi B', 'TP. Ho Chi Minh', 'L01'),
+	('S05', 'Huynh Van Thien', 'Cao Lanh', 'L02'),
+	('S06', 'Chau Bao Duy', 'Tien Giang', 'L03'),
+	('S07', 'Nguyen Van F', 'Campodia', 'L01'),
+	('S08', 'Tran Chau C', 'China', 'L02'),
+	('S09', 'Tran Minh Hieu', 'Hoc Mon', 'L03'),
+	('S10', 'Sa Tang', 'Hoa Qua Son', 'L01'),
+	('S11', 'Huynh Thien An', 'Ben Tre', 'L02'),
+	('S12', 'Huynh Van Phang', 'Ha Noi', 'L03'),
+	('S13', 'Chau Bao Toan', 'Thai Binh', 'L01'),
+	('S14', 'Sieu San Yan', 'Thai Nguyen', 'L02'),
+	('S15', 'Pham Van Bo', 'Trung Nguyen', 'L03'),
+	('S16', 'Chau Bao Binh', 'Ca Mau', 'L01'),
+	('S17', 'Pham Van Bo', 'Kien Giang', 'L02'),
+	('S18', 'Doan Hoai An', 'Ben Tre', 'L03'),
+	('S19', 'Trinh Tran Phuong Tuan', 'Ben Tre', 'L01'),
+	('S20', 'Le Tuan Khang', 'Rach Gia', 'L02');
 -- Xem bảng sinh viên
 SELECT * FROM sinhvien;
 
 -- Tạo bảng điểm sinh viên
 CREATE TABLE diemsv (
 	masv char(3),
-    mamh char(3),
-    diem float,
-    PRIMARY KEY (masv, mamh)
+	mamh char(3),
+	diem float,
+	PRIMARY KEY (masv, mamh)
 );
 -- Nhập dữ liệu bảng điểm sinh viên
 INSERT INTO diemsv 
 VALUES ('S01', 'M01', 8),
-	   ('S01', 'M02', 8),
-       ('S01', 'M04', 10),
-       ('S01', 'M05', 2),
-       ('S02', 'M02', 8),
-       ('S02', 'M04', 2),
-       ('S02', 'M05', 3.5),
-       ('S03', 'M01', 10),
-       ('S03', 'M03', 8),
-       ('S04', 'M02', 9),
-       ('S05', 'M02', 6),
-       ('S05', 'M03', 9.5),
-       ('S05', 'M04', 8),
-       ('S05', 'M05', 7),
-       ('S06', 'M01', 4),
-       ('S06', 'M03', 8.5),
-       ('S06', 'M05', 6),
-       ('S07', 'M03', 3),
-       ('S07', 'M04', 2),
-       ('S08', 'M01', 10),
-       ('S09', 'M02', 4),
-       ('S09', 'M03', 2),
-       ('S09', 'M04', 3),
-       ('S09', 'M05', 9),
-       ('S10', 'M01', 4.5),
-       ('S10', 'M02', 3),
-       ('S10', 'M04', 6);
+	('S01', 'M02', 8),
+	('S01', 'M04', 10),
+	('S01', 'M05', 2),
+	('S02', 'M02', 8),
+	('S02', 'M04', 2),
+	('S02', 'M05', 3.5),
+	('S03', 'M01', 10),
+	('S03', 'M03', 8),
+	('S04', 'M02', 9),
+	('S05', 'M02', 6),
+	('S05', 'M03', 9.5),
+	('S05', 'M04', 8),
+	('S05', 'M05', 7),
+	('S06', 'M01', 4),
+	('S06', 'M03', 8.5),
+	('S06', 'M05', 6),
+	('S07', 'M03', 3),
+	('S07', 'M04', 2),
+	('S08', 'M01', 10),
+	('S09', 'M02', 4),
+	('S09', 'M03', 2),
+	('S09', 'M04', 3),
+	('S09', 'M05', 9),
+	('S10', 'M01', 4.5),
+	('S10', 'M02', 3),
+	('S10', 'M04', 6);
 -- Xem bảng điểm sinh viên
 SELECT * FROM diemsv;
 
@@ -144,9 +144,10 @@ WHERE d.diem < 5 AND d.masv = 'S02';
 SELECT *
 FROM monhoc
 WHERE mamh
-NOT IN (SELECT mamh
-	    FROM diemsv
-		WHERE masv = 'S03'
+NOT IN (
+	SELECT mamh
+	FROM diemsv
+	WHERE masv = 'S03'
 );
 
 -- 5.8. Sĩ số của lớp mã số ”L01”.
@@ -162,8 +163,8 @@ GROUP BY malp;
 -- 5.10. Lớp có sĩ số lớn nhất.
 WITH SiSo AS (
 	SELECT malp, COUNT(*) AS siso
-    FROM sinhvien
-    GROUP BY malp
+	FROM sinhvien
+	GROUP BY malp
 )
 SELECT malp, siso
 FROM SiSo
@@ -172,9 +173,9 @@ WHERE siso = (SELECT MAX(siso) FROM SiSo);
 -- 5.11. Lớp (mã số và tên) có sĩ số lớn nhất.
 WITH SiSo AS (
 	SELECT sv.malp, l.tenlp, COUNT(*) AS siso
-    FROM sinhvien sv
-    JOIN lop l ON sv.malp = l.malp
-    GROUP BY malp
+	FROM sinhvien sv
+	JOIN lop l ON sv.malp = l.malp
+	GROUP BY malp
 )
 SELECT malp, tenlp, siso
 FROM SiSo
@@ -219,8 +220,8 @@ GROUP BY malp;
 -- 5.18. Cho biết sinh viên (mã số) có điểm trung bình lớn nhất.
 WITH DiemTB AS (
 	SELECT masv, AVG(diem) AS diemtb
-    FROM diemsv
-    GROUP BY masv
+	FROM diemsv
+	GROUP BY masv
 )
 SELECT masv, diemtb
 FROM DiemTB
@@ -229,9 +230,9 @@ WHERE diemtb = (SELECT MAX(diemtb) FROM DiemTB);
 -- 5.19. Cho biết sinh viên (mã số và tên) có điểm trung bình lớn nhất.
 WITH DiemTB AS (
 	SELECT sv.masv, sv.tensv, AVG(d.diem) AS diemtb
-    FROM diemsv d
-    JOIN sinhvien sv ON d.masv = sv.masv
-    GROUP BY masv
+	FROM diemsv d
+	JOIN sinhvien sv ON d.masv = sv.masv
+	GROUP BY masv
 )
 SELECT masv, tensv, diemtb
 FROM DiemTB
@@ -252,11 +253,11 @@ GROUP BY masv;
 
 -- 5.22. Sinh viên có điểm trung bình có hệ số lớn nhất.
 WITH DiemTBTC AS (
-    SELECT sv.masv, sv.tensv, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
-    FROM diemsv d
-    JOIN monhoc mh ON d.mamh = mh.mamh
-    JOIN sinhvien sv ON d.masv = sv.masv
-    GROUP BY masv
+	SELECT sv.masv, sv.tensv, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
+	FROM diemsv d
+	JOIN monhoc mh ON d.mamh = mh.mamh
+	JOIN sinhvien sv ON d.masv = sv.masv
+	GROUP BY masv
 )
 SELECT masv, tensv, diemtbtinchi
 FROM DiemTBTC
