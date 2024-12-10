@@ -15,7 +15,7 @@ Repo này chứa 5 bài tập thực hành của học phần Cơ sở dữ li�
 **Các thư mục bài tập thực hành chứa các file sau:**
 
 * **[Tên file].sql:** File script SQL chứa các câu lệnh tạo bảng, thêm dữ liệu, truy vấn,...
-* **[Tên file].pdf:** File tài liệu mô tả chi tiết bài tập (nếu có)
+* **[Tên file].md:** File mô tả chi tiết, lưu ý về bài tập (nếu có)
 
 **Để sử dụng repo này, bạn có thể:**
 
