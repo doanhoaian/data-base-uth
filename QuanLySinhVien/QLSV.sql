@@ -144,9 +144,10 @@ WHERE d.diem < 5 AND d.masv = 'S02';
 SELECT *
 FROM monhoc
 WHERE mamh
-NOT IN (SELECT mamh
-	    FROM diemsv
-		WHERE masv = 'S03'
+NOT IN (
+	SELECT mamh
+	FROM diemsv
+	WHERE masv = 'S03'
 );
 
 -- 5.8. Sĩ số của lớp mã số ”L01”.
@@ -160,6 +161,7 @@ FROM sinhvien
 GROUP BY malp;
 
 -- 5.10. Lớp có sĩ số lớn nhất.
+	-- Cách 1
 WITH SiSo AS (
 	SELECT malp, COUNT(*) AS siso
     FROM sinhvien
@@ -168,17 +170,37 @@ WITH SiSo AS (
 SELECT malp, siso
 FROM SiSo
 WHERE siso = (SELECT MAX(siso) FROM SiSo);
+	-- Cách 2
+SELECT malp, COUNT(*) AS siso
+FROM sinhvien
+GROUP BY malp
+HAVING siso >= ALL(
+	SELECT COUNT(*)
+	FROM sinhvien
+	GROUP BY malp
+);
 
 -- 5.11. Lớp (mã số và tên) có sĩ số lớn nhất.
+	-- Cách 1
 WITH SiSo AS (
 	SELECT sv.malp, l.tenlp, COUNT(*) AS siso
     FROM sinhvien sv
     JOIN lop l ON sv.malp = l.malp
-    GROUP BY malp
+    GROUP BY malp, tenlp
 )
 SELECT malp, tenlp, siso
 FROM SiSo
 WHERE siso = (SELECT MAX(siso) FROM SiSo);
+	-- Cách 2
+SELECT sv.malp, l.tenlp, COUNT(*) AS siso
+FROM sinhvien sv
+JOIN lop l ON sv.malp = l.malp
+GROUP BY malp, tenlp
+HAVING siso >= ALL(
+	SELECT COUNT(*)
+	FROM sinhvien
+	GROUP BY malp
+);
 
 -- 5.12. Điểm trung bình của sinh viên mã số ”S02”.
 SELECT AVG(diem) AS diemtb
@@ -194,14 +216,14 @@ GROUP BY masv;
 SELECT sv.masv, sv.tensv, AVG(d.diem) AS diemtb
 FROM diemsv d
 JOIN sinhvien sv ON d.masv = sv.masv
-GROUP BY masv;
+GROUP BY masv, tensv;
 
 -- 5.15. Điểm trung bình của lớp mã số ”L03”.
-SELECT AVG(d.diem) AS diemtb
+SELECT sv.malp, AVG(d.diem) AS diemtb
 FROM diemsv d
 JOIN sinhvien sv ON d.masv = sv.masv
-WHERE sv.malp = 'L03'
-GROUP BY malp; 
+GROUP BY malp
+HAVING malp = 'L03'; 
 
 -- 5.16. Điểm trung bình của từng lớp (mã số).
 SELECT sv.malp, AVG(d.diem) AS diemtb
@@ -214,9 +236,10 @@ SELECT l.malp, l.tenlp, AVG(d.diem) AS diemtb
 FROM diemsv d
 JOIN sinhvien sv ON d.masv = sv.masv
 JOIN lop l ON sv.malp = l.malp
-GROUP BY malp;
+GROUP BY malp, tenlp;
 
 -- 5.18. Cho biết sinh viên (mã số) có điểm trung bình lớn nhất.
+	-- Cách 1
 WITH DiemTB AS (
 	SELECT masv, AVG(diem) AS diemtb
     FROM diemsv
@@ -225,49 +248,85 @@ WITH DiemTB AS (
 SELECT masv, diemtb
 FROM DiemTB
 WHERE diemtb = (SELECT MAX(diemtb) FROM DiemTB);
+	-- Cách 2
+SELECT masv, AVG(diem) AS diemtb
+FROM diemsv
+GROUP BY masv
+HAVING diemtb >= ALL(
+	SELECT AVG(diem)
+    FROM diemsv
+    GROUP BY masv
+);
 
 -- 5.19. Cho biết sinh viên (mã số và tên) có điểm trung bình lớn nhất.
+	-- Cách 1
 WITH DiemTB AS (
 	SELECT sv.masv, sv.tensv, AVG(d.diem) AS diemtb
     FROM diemsv d
     JOIN sinhvien sv ON d.masv = sv.masv
-    GROUP BY masv
+    GROUP BY masv, tensv
 )
 SELECT masv, tensv, diemtb
 FROM DiemTB
 WHERE diemtb = (SELECT MAX(diemtb) from DiemTB);
+	-- Cách 2 
+SELECT sv.masv, sv.tensv, AVG(d.diem) AS diemtb
+FROM diemsv d
+JOIN sinhvien sv ON d.masv = sv.masv
+GROUP BY masv, tensv
+HAVING diemtb >= ALL(
+	SELECT AVG(diem)
+    FROM diemsv
+    GROUP BY masv
+);
 
 -- 5.20. Điểm trung bình có hệ số (số tín chỉ) của từng sinh viên (mã số).
-SELECT d.masv, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
+SELECT d.masv, SUM(d.diem * mh.sotc) / SUM(mh.sotc) AS diemtbtinchi
 FROM diemsv d
 JOIN monhoc mh ON d.mamh = mh.mamh
 GROUP BY masv;
 
 -- 5.21. Điểm trung bình có hệ số (số tín chỉ) của từng sinh viên (mã số và tên).
-SELECT sv.masv, sv.tensv, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
+SELECT sv.masv, sv.tensv, SUM(d.diem * mh.sotc) / SUM(mh.sotc) AS diemtbtinchi
 FROM diemsv d
 JOIN monhoc mh ON d.mamh = mh.mamh
 JOIN sinhvien sv ON d.masv = sv.masv
-GROUP BY masv;
+GROUP BY masv, tensv;
 
 -- 5.22. Sinh viên có điểm trung bình có hệ số lớn nhất.
+	-- Cách 1
 WITH DiemTBTC AS (
-    SELECT sv.masv, sv.tensv, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
+    SELECT sv.masv, sv.tensv, SUM(d.diem * mh.sotc) / SUM(mh.sotc) AS diemtbtinchi
     FROM diemsv d
     JOIN monhoc mh ON d.mamh = mh.mamh
     JOIN sinhvien sv ON d.masv = sv.masv
-    GROUP BY masv
+    GROUP BY masv, tensv
 )
 SELECT masv, tensv, diemtbtinchi
 FROM DiemTBTC
 WHERE diemtbtinchi = (SELECT MAX(diemtbtinchi) FROM DiemTBTC);
+	-- Cách 2
+SELECT sv.masv, sv.tensv, SUM(d.diem * mh.sotc) / SUM(mh.sotc) AS diemtbtinchi
+FROM diemsv d
+JOIN monhoc mh ON d.mamh = mh.mamh
+JOIN sinhvien sv ON d.masv = sv.masv
+GROUP BY masv, tensv
+HAVING diemtbtinchi >= ALL(
+	SELECT SUM(d.diem * mh.sotc) / SUM(mh.sotc)
+	FROM diemsv d
+	JOIN monhoc mh ON d.mamh = mh.mamh
+	GROUP BY masv
+);
 
 -- 5.23. Điểm trung bình có hệ số của từng lớp.
-SELECT sv.malp, SUM(d.diem) / SUM(mh.sotc) AS diemtbtinchi
+SELECT sv.malp, SUM(d.diem * mh.sotc) / SUM(mh.sotc) AS diemtbtinchi
 FROM diemsv d
 JOIN monhoc mh ON d.mamh = mh.mamh
 JOIN sinhvien sv ON d.masv = sv.masv
 GROUP BY malp;
+
+
+-- --- --
 
 
 -- Thực hiện yêu cầu 6 --
